@@ -29,6 +29,38 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/cart", (req, res) => {
+  res.render("cart");
+});
+
+app.get("/checkout", (req, res) => {
+  res.render("checkout");
+});
+
+app.get("/contact", (req, res) => {
+  res.render("contact");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login");
+});
+
+app.get("/my-account", (req, res) => {
+  res.render("my-account");
+});
+
+app.get("/product-detail", (req, res) => {
+  res.render("product-detail");
+});
+
+app.get("/product-list", (req, res) => {
+  res.render("product-list");
+});
+
+app.get("/wishlist", (req, res) => {
+  res.render("wishlist");
+});
+
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });
