@@ -29,37 +29,41 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/cart", (req, res) => {
-  res.render("cart");
+app.get("/:page", (req, res) => {
+  res.render(req.params.page);
 });
 
-app.get("/checkout", (req, res) => {
-  res.render("checkout");
-});
+// app.get("/cart", (req, res) => {
+//   res.render("cart");
+// });
 
-app.get("/contact", (req, res) => {
-  res.render("contact");
-});
+// app.get("/checkout", (req, res) => {
+//   res.render("checkout");
+// });
 
-app.get("/login", (req, res) => {
-  res.render("login");
-});
+// app.get("/contact", (req, res) => {
+//   res.render("contact");
+// });
 
-app.get("/my-account", (req, res) => {
-  res.render("my-account");
-});
+// app.get("/login", (req, res) => {
+//   res.render("login");
+// });
 
-app.get("/product-detail", (req, res) => {
-  res.render("product-detail");
-});
+// app.get("/my-account", (req, res) => {
+//   res.render("my-account");
+// });
 
-app.get("/product-list", (req, res) => {
-  res.render("product-list");
-});
+// app.get("/product-detail", (req, res) => {
+//   res.render("product-detail");
+// });
 
-app.get("/wishlist", (req, res) => {
-  res.render("wishlist");
-});
+// app.get("/product-list", (req, res) => {
+//   res.render("product-list");
+// });
+
+// app.get("/wishlist", (req, res) => {
+//   res.render("wishlist");
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
