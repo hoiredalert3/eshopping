@@ -25,6 +25,16 @@ app.engine(
 
 app.set("view engine", "hbs");
 
+app.get("/createTables", (req, res) => {
+  const models = require("./models");
+  //{force:true} xóa bảng cũ và tạo bảng mới nếu tồn tại
+  //{alter:true} chỉnh sửa bảng đã tồn tại sao cho giống với bảng mới
+  //{} nếu chưa tồn tại thì tạo mới, ngược lại thì không làm gì
+  models.sequelize.sync().then(() => {
+    res.send("Tables created!");
+  });
+});
+
 app.get("/", (req, res) => {
   res.render("index");
 });
