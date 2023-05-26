@@ -26,8 +26,24 @@ app.engine(
 app.set("view engine", "hbs");
 
 const indexRouter = require("./routes/indexRouter");
+const { error } = require("console");
 
 app.use("/", indexRouter);
+
+//Middleware function at the bottom of the stack to handle a 404 response
+app.use((req, res, next) => {
+  res.status(404).render("error", { message: "File not found" });
+});
+
+/*
+  Error-handling middleware 
+  With four arguments (err, req, res, next):
+*/
+
+app.use((error, req, res, next) => {
+  console.error(error);
+  res.status(500).render("error", { message: "Internal server error" });
+});
 
 // app.get("/cart", (req, res) => {
 //   res.render("cart");
