@@ -20,13 +20,13 @@ app.engine(
     partialsDir: path.join(__dirname, "/views/partials"),
     extname: "hbs",
     defaultLayout: "layout",
+    runtimeOptions: { allowProtoPropertiesByDefault: true },
   })
 );
 
 app.set("view engine", "hbs");
 
 const indexRouter = require("./routes/indexRouter");
-const { error } = require("console");
 
 app.use("/", indexRouter);
 
