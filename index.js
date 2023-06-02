@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 const path = require("path");
 const expressHandlebars = require("express-handlebars");
+const { createStarList } = require("./controllers/handlebarsHelper");
 
 //Cau hinh static folder
 //Can phai de file index.js o thu muc goc
@@ -21,12 +22,14 @@ app.engine(
     extname: "hbs",
     defaultLayout: "layout",
     runtimeOptions: { allowProtoPropertiesByDefault: true },
+    helpers: { createStarList },
   })
 );
 
 app.set("view engine", "hbs");
 
 const indexRouter = require("./routes/indexRouter");
+const helper = require("./controllers/handlebarsHelper");
 
 app.use("/", indexRouter);
 
