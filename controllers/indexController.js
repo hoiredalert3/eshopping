@@ -4,20 +4,25 @@ const controller = {};
 const models = require("../models");
 
 controller.showHomePage = async (req, res) => {
-  const [brandsData, categoriesData] = await Promise.all([
+  const [brandsData, categoriesData, featuredProducts] = await Promise.all([
     models.Brand.findAll(),
     models.Category.findAll(),
+    models.Product.findAll({
+      limit: 5,
+      attributes: ["id", "name", "imagePath", "oldPrice", "price", "stars"],
+      order: [["stars", "DESC"]],
+    }),
   ]);
+
+  console.log(featuredProducts.map((item) => item.dataValues));
 
   const arr1 = categoriesData.splice(2, 2);
   const arr2 = categoriesData.splice(1, 1);
   const newCategoriesData = [categoriesData, arr1, arr2];
-  console.log(newCategoriesData);
 
   res.locals.categoriesData = newCategoriesData;
-  categoriesData.forEach((categories) => {
-    console.log(categories);
-  });
+  res.locals.featuredProducts = featuredProducts;
+
   res.render("index", { brands: brandsData });
 };
 
