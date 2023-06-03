@@ -15,32 +15,28 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-9">
+        {{#with product}}
+          
         <div class="row align-items-center product-detail-top">
           <div class="col-md-5">
             <div class="product-slider-single">
-              <img src="img/product-1.png" alt="Product Image" />
-              <img src="img/product-2.png" alt="Product Image" />
-              <img src="img/product-3.png" alt="Product Image" />
+              {{#each Images }}
+                <img src="{{imagePath}}" alt="{{name}}" />
+              {{/each}}
+              
+              
             </div>
           </div>
           <div class="col-md-7">
             <div class="product-content">
-              <div class="title"><h2>Phasellus Gravida</h2></div>
+              <div class="title"><h2>{{name}}</h2></div>
               <div class="ratting">
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
+                {{{createStarList stars}}}
               </div>
-              <div class="price">$22 <span>$25</span></div>
+              <div class="price">${{price}} <span>${{oldPrice}}</span></div>
               <div class="details">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-                  condimentum quam ac mi viverra dictum. In efficitur ipsum
-                  diam, at dignissim lorem tempor in. Vivamus tempor hendrerit
-                  finibus. Nulla tristique viverra nisl, sit amet bibendum ante
-                  suscipit non.
+                  {{summary}}
                 </p>
               </div>
 
@@ -79,7 +75,7 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" data-toggle="pill" href="#reviews"
-                  >Reviews (1)</a
+                  >Reviews ({{Reviews.length}})</a
                 >
               </li>
             </ul>
@@ -89,50 +85,30 @@
                 <br />
                 <h4>Product description</h4>
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-                  condimentum quam ac mi viverra dictum. In efficitur ipsum
-                  diam, at dignissim lorem tempor in. Vivamus tempor hendrerit
-                  finibus. Nulla tristique viverra nisl, sit amet bibendum ante
-                  suscipit non. Praesent in faucibus tellus, sed gravida lacus.
-                  Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus
-                  scelerisque. Suspendisse sit amet neque neque. Praesent
-                  suscipit et magna eu iaculis. Donec arcu libero, commodo ac
-                  est a, malesuada finibus dolor. Aenean in ex eu velit semper
-                  fermentum. In leo dui, aliquet sit amet eleifend sit amet,
-                  varius in turpis. Maecenas fermentum ut ligula at consectetur.
-                  Nullam et tortor leo.
+                  {{description}}
                 </p>
               </div>
               <div id="specification" class="container tab-pane fade">
                 <br />
                 <h4>Product specification</h4>
-                <ul>
-                  <li>Lorem ipsum dolor sit amet</li>
-                  <li>Lorem ipsum dolor sit amet</li>
-                  <li>Lorem ipsum dolor sit amet</li>
-                  <li>Lorem ipsum dolor sit amet</li>
-                  <li>Lorem ipsum dolor sit amet</li>
-                </ul>
+                {{specification}}
               </div>
               <div id="reviews" class="container tab-pane fade">
                 <br />
-                <div class="reviews-submitted">
+                {{#each Reviews }}
+                  <div class="reviews-submitted">
                   <div class="reviewer">
-                    Phasellus Gravida - <span>01 Jan 2020</span>
+                    {{User.firstName}} {{User.lastName}} - <span>{{createdAt}}</span>
                   </div>
                   <div class="ratting">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
+                    {{{createStarList stars}}}
                   </div>
                   <p>
-                    Sed ut perspiciatis unde omnis iste natus error sit
-                    voluptatem accusantium doloremque laudantium, totam rem
-                    aperiam.
+                    {{review}}
                   </p>
                 </div>
+                {{/each}}
+                
                 <div class="reviews-submit">
                   <h4>Give your Review:</h4>
                   <div class="ratting">
@@ -161,6 +137,7 @@
             </div>
           </div>
         </div>
+        {{/with}}
 
         <div class="container">
           <div class="section-header">
@@ -178,7 +155,7 @@
             <div class="product-item">
               <div class="product-image">
                 <a href="product-detail.html">
-                  <img src="img/product-1.png" alt="Product Image" />
+                  <img src="/img/product-1.png" alt="Product Image" />
                 </a>
                 <div class="product-action">
                   <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -203,7 +180,7 @@
             <div class="product-item">
               <div class="product-image">
                 <a href="product-detail.html">
-                  <img src="img/product-2.png" alt="Product Image" />
+                  <img src="/img/product-2.png" alt="Product Image" />
                 </a>
                 <div class="product-action">
                   <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -228,7 +205,7 @@
             <div class="product-item">
               <div class="product-image">
                 <a href="product-detail.html">
-                  <img src="img/product-3.png" alt="Product Image" />
+                  <img src="/img/product-3.png" alt="Product Image" />
                 </a>
                 <div class="product-action">
                   <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -253,7 +230,7 @@
             <div class="product-item">
               <div class="product-image">
                 <a href="product-detail.html">
-                  <img src="img/product-4.png" alt="Product Image" />
+                  <img src="/img/product-4.png" alt="Product Image" />
                 </a>
                 <div class="product-action">
                   <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -278,7 +255,7 @@
             <div class="product-item">
               <div class="product-image">
                 <a href="product-detail.html">
-                  <img src="img/product-5.png" alt="Product Image" />
+                  <img src="/img/product-5.png" alt="Product Image" />
                 </a>
                 <div class="product-action">
                   <a href="#"><i class="fa fa-cart-plus"></i></a>
