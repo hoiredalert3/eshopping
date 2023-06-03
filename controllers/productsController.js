@@ -25,11 +25,15 @@ controller.showProducts = async (req, res) => {
   const brand = req.query.brand ? parseInt(req.query.brand) : 0;
   const tag = req.query.tag ? parseInt(req.query.tag) : 0;
   const keyword = req.query.keyword || "";
+  const sort = ["newest", "popular", "price"].includes(req.query.sort)
+    ? req.query.sort
+    : "price";
 
   let options = {
     attributes: ["id", "name", "imagePath", "price", "oldPrice", "stars"],
     where: {},
     include: [],
+    order: [],
   };
 
   if (categoryId > 0) {
@@ -48,10 +52,28 @@ controller.showProducts = async (req, res) => {
     options.where.name = { [Op.like]: `%${keyword}%` };
   }
 
+  switch (sort) {
+    case "newest":
+      options.order.push(["createdAt", "DESC"]);
+      break;
+    case "popular":
+      options.order.push(["stars", "DESC"]);
+      break;
+    default:
+      options.order.push(["price", "ASC"]);
+      break;
+  }
+
+  res.locals.originalUrl = removeParam("sort", req.originalUrl);
+  if (Object.keys(req.query).length == 0) {
+    res.locals.originalUrl += "?";
+  }
+  res.locals.sort = sort;
+
   const products = await models.Product.findAll(options);
   res.locals.products = products;
 
-  console.log(products);
+  // console.log(products);
 
   // const categories3 = await models.Category.findAll({
   //   // Join with 'Product', but don't actually return the Products
@@ -94,5 +116,23 @@ controller.showDetails = async (req, res) => {
 
   res.render("product-detail");
 };
+
+function removeParam(key, sourceURL) {
+  var rtn = sourceURL.split("?")[0],
+    param,
+    params_arr = [],
+    queryString = sourceURL.indexOf("?") !== -1 ? sourceURL.split("?")[1] : "";
+  if (queryString !== "") {
+    params_arr = queryString.split("&");
+    for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+      param = params_arr[i].split("=")[0];
+      if (param === key) {
+        params_arr.splice(i, 1);
+      }
+    }
+    if (params_arr.length) rtn = rtn + "?" + params_arr.join("&");
+  }
+  return rtn;
+}
 
 module.exports = controller;
