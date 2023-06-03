@@ -29,9 +29,11 @@ app.engine(
 app.set("view engine", "hbs");
 
 const indexRouter = require("./routes/indexRouter");
-const helper = require("./controllers/handlebarsHelper");
+const productsRouter = require("./routes/productsRouter");
 
 app.use("/", indexRouter);
+
+app.use("/products", productsRouter);
 
 //Middleware function at the bottom of the stack to handle a 404 response
 app.use((req, res, next) => {

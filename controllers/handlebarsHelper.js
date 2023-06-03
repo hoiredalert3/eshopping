@@ -17,7 +17,6 @@ helper.createStarList = (stars) => {
   }
   starList += emptyStar.repeat(5 - count);
 
-  console.log(starList);
   return starList;
 };
 
