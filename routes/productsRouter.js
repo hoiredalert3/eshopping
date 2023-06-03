@@ -5,9 +5,9 @@ const router = express.Router();
 const controller = require("../controllers/productsController");
 
 //Show list of products
-router.get("/", controller.getDate, controller.showProducts);
+router.get("/", controller.getData, controller.showProducts);
 
 //Show product details
-router.get("/:id", controller.getDate, controller.showDetails);
+router.get("/:id", controller.getData, controller.showDetails);
 
 module.exports = router;

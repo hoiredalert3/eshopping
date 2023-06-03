@@ -20,8 +20,11 @@
             <div class="row">
               <div class="col-md-8">
                 <div class="product-search">
-                  <input type="email" value="Search" />
-                  <button><i class="fa fa-search"></i></button>
+                  <form action="/products" method="GET">
+                    <input type="text" name="keyword" id="keywordInput" placeholder="Search" required>
+                    <button><i class="fa fa-search"></i></button>
+                  </form>
+                  
                 </div>
               </div>
               <div class="col-md-4">

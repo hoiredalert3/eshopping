@@ -1,8 +1,9 @@
 let controller = {};
 const sequelize = require("sequelize");
 const models = require("../models");
+const Op = sequelize.Op;
 
-controller.getDate = async (req, res, next) => {
+controller.getData = async (req, res, next) => {
   const categories = await models.Category.findAll({
     include: [{ model: models.Product }],
     // raw: true,
@@ -23,6 +24,7 @@ controller.showProducts = async (req, res) => {
   const categoryId = req.query.category ? parseInt(req.query.category) : 0;
   const brand = req.query.brand ? parseInt(req.query.brand) : 0;
   const tag = req.query.tag ? parseInt(req.query.tag) : 0;
+  const keyword = req.query.keyword || "";
 
   let options = {
     attributes: ["id", "name", "imagePath", "price", "oldPrice", "stars"],
@@ -42,8 +44,14 @@ controller.showProducts = async (req, res) => {
     options.include.push({ model: models.Tag, where: { id: tag } });
   }
 
+  if (keyword.trim()) {
+    options.where.name = { [Op.like]: `%${keyword}%` };
+  }
+
   const products = await models.Product.findAll(options);
   res.locals.products = products;
+
+  console.log(products);
 
   // const categories3 = await models.Category.findAll({
   //   // Join with 'Product', but don't actually return the Products
