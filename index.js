@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 const path = require("path");
 const expressHandlebars = require("express-handlebars");
 const { createStarList } = require("./controllers/handlebarsHelper");
+const { createPagination } = require("express-handlebars-paginate");
 
 //Cau hinh static folder
 //Can phai de file index.js o thu muc goc
@@ -22,7 +23,7 @@ app.engine(
     extname: "hbs",
     defaultLayout: "layout",
     runtimeOptions: { allowProtoPropertiesByDefault: true },
-    helpers: { createStarList },
+    helpers: { createStarList, createPagination },
   })
 );
 
