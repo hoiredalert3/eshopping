@@ -28,6 +28,9 @@ controller.showProducts = async (req, res) => {
   const sort = ["newest", "popular", "price"].includes(req.query.sort)
     ? req.query.sort
     : "price";
+  const page = isNaN(req.query.page)
+    ? 1
+    : Math.max(1, parseInt(req.query.page));
 
   let options = {
     attributes: ["id", "name", "imagePath", "price", "oldPrice", "stars"],
@@ -70,27 +73,20 @@ controller.showProducts = async (req, res) => {
   }
   res.locals.sort = sort;
 
-  const products = await models.Product.findAll(options);
-  res.locals.products = products;
+  const limit = 6;
+  options.limit = limit;
+  options.offset = limit * (page - 1);
 
-  // console.log(products);
+  const { rows, count } = await models.Product.findAndCountAll(options);
+  res.locals.pagination = {
+    page: page,
+    limit: limit,
+    totalRows: count,
+    queryParams: req.query,
+  };
 
-  // const categories3 = await models.Category.findAll({
-  //   // Join with 'Product', but don't actually return the Products
-  //   include: [{ model: models.Product, attributes: [] }],
-  //   // Return COUNT(Product.id) as the only attribute
-  //   attributes: [
-  //     "id",
-  //     "name",
-  //     [sequelize.fn("COUNT", sequelize.col("Products.id")), "total"],
-  //   ],
-  //   // Group by Category.id
-  //   group: ["Category.id"],
-  //   raw: true,
-  // });
-
-  // console.log(categories3);
-
+  // const products = await models.Product.findAll(options);
+  res.locals.products = rows;
   res.render("product-list");
 };
 
