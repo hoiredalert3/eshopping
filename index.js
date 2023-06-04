@@ -23,6 +23,8 @@ redisClient
     // other tasks
   })
   .catch(console.err)
+const passport = require("./controllers/passport")
+const flash = require("connect-flash")
 
 //Cau hinh static folder
 //Can phai de file index.js o thu muc goc
@@ -61,22 +63,31 @@ app.use(
   })
 )
 
+//Cau hinh su dung passport
+app.use(passport.initialize())
+app.use(passport.session())
+
+//Cau hinh su dung connect-flash
+app.use(flash())
+
 //Middleware khoi tao gio hang
 app.use((req, res, next) => {
   const Cart = require("./controllers/cart")
   req.session.cart = new Cart(req.session.cart || {})
   res.locals.quantity = req.session.cart.quantity
+  res.locals.isLoggedIn = req.isAuthenticated()
   next()
 })
 
 //Routes
 const indexRouter = require("./routes/indexRouter")
 const productsRouter = require("./routes/productsRouter")
+const authRouter = require("./routes/authRouter")
 const exp = require("constants")
 
 app.use("/", indexRouter)
-
 app.use("/products", productsRouter)
+app.use("/users", authRouter)
 
 //Middleware function at the bottom of the stack to handle a 404 response
 app.use((req, res, next) => {
