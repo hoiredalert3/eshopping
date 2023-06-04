@@ -1,4 +1,5 @@
 "use strict"
+require("dotenv").config()
 
 const express = require("express")
 const app = express()
@@ -13,10 +14,15 @@ const session = require("express-session")
 const redisStore = require("connect-redis").default
 const { createClient } = require("redis")
 const redisClient = createClient({
-  // url: "rediss://red-chu95vfdvk4olio5ppi0:nIkfyp0jjez8kMtcvWrQamCAEP9zHvts@oregon-redis.render.com:6379",
-  url: "redis://red-chua4me7avj345e21lkg:6379",
+  url: process.env.REDIS_URL,
+  // url: "redis://red-chua4me7avj345e21lkg:6379",
 })
-redisClient.connect().catch(console.err)
+redisClient
+  .connect()
+  .then(() => {
+    // other tasks
+  })
+  .catch(console.err)
 
 //Cau hinh static folder
 //Can phai de file index.js o thu muc goc
@@ -44,7 +50,7 @@ app.use(express.urlencoded({ extended: false }))
 //Cau hinh su dung express-session
 app.use(
   session({
-    secret: "ojfaisdfjowe83",
+    secret: process.env.SESSION_SECRET,
     store: new redisStore({ client: redisClient }),
     resave: false,
     saveUninitialized: false,

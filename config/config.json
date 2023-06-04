@@ -1,4 +1,5 @@
 {
+  "use_env_variable": "POSTGRESQL_URL",
   "development": {
     "username": "eshoppingdb",
     "password": "4iigZvaEAzKUxWupVuAtsG3nRIJghsl0",
