@@ -9,6 +9,7 @@ const path = require("path");
 const expressHandlebars = require("express-handlebars");
 const { createStarList } = require("./controllers/handlebarsHelper");
 const { createPagination } = require("express-handlebars-paginate");
+const session = require("express-session");
 
 //Cau hinh static folder
 //Can phai de file index.js o thu muc goc
@@ -29,8 +30,35 @@ app.engine(
 
 app.set("view engine", "hbs");
 
+//Cau hinh doc du lieu tu post request
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+//Cau hinh su dung express-session
+app.use(
+  session({
+    secret: "ojfaisdfjowe83",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 20 * 60 * 1000, //20 phut
+    },
+  })
+);
+
+//Middleware khoi tao gio hang
+app.use((req, res, next) => {
+  const Cart = require("./controllers/cart");
+  req.session.cart = new Cart(req.session.cart || {});
+  res.locals.quantity = req.session.cart.quantity;
+  next();
+});
+
+//Routes
 const indexRouter = require("./routes/indexRouter");
 const productsRouter = require("./routes/productsRouter");
+const exp = require("constants");
 
 app.use("/", indexRouter);
 
