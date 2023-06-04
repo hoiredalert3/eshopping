@@ -14,7 +14,7 @@ const redisStore = require("connect-redis").default
 const { createClient } = require("redis")
 const redisClient = createClient({
   // url: "rediss://red-chu95vfdvk4olio5ppi0:nIkfyp0jjez8kMtcvWrQamCAEP9zHvts@oregon-redis.render.com:6379",
-  url: "redis://red-chu95vfdvk4olio5ppi0:6379",
+  url: "redis://red-chua4me7avj345e21lkg:6379",
 })
 redisClient.connect().catch(console.err)
 
