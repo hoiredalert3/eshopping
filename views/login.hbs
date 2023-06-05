@@ -28,38 +28,28 @@
             <div class="row">
               <div class="col-md-6">
                 <label>E-mail / Username</label>
-                <input
-                  class="form-control"
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  required
-                />
+                <input class="form-control" type="email" placeholder="Email" name="email" required
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
               </div>
               <div class="col-md-6">
                 <label>Password</label>
-                <input class="form-control" type="password" placeholder="Password" name="password" required/>
+                <input class="form-control" type="password" placeholder="Password" name="password" required
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                  title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" />
               </div>
               <div class="col-md-12">
                 <div class="custom-control custom-checkbox">
-                  <input
-                    type="checkbox"
-                    class="custom-control-input"
-                    id="newaccount"
-                    name="keepSignedIn"
-                  />
-                  <label class="custom-control-label" for="newaccount"
-                    >Keep me signed in</label
-                  >
+                  <input type="checkbox" class="custom-control-input" id="newaccount" name="keepSignedIn" />
+                  <label class="custom-control-label" for="newaccount">Keep me signed in</label>
                 </div>
               </div>
               <div class="col-md-12">
                 <button class="btn">Submit</button>
               </div>
               {{#if loginMessage}}
-                <div class="col md-3">
-                  <div class="p-3 mt-3 alert alert-warning">{{loginMessage}}</div>
-                </div>
+              <div class="col md-3">
+                <div class="p-3 mt-3 alert alert-warning">{{{loginMessage}}}</div>
+              </div>
               {{/if}}
             </div>
           </div>
@@ -72,11 +62,7 @@
           <div class="row">
             <div class="col-md-6">
               <label>First Name</label>
-              <input
-                class="form-control"
-                type="text"
-                placeholder="First Name"
-              />
+              <input class="form-control" type="text" placeholder="First Name" />
             </div>
             <div class="col-md-6">
               <label>Last Name"</label>
