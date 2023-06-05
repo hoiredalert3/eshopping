@@ -30,4 +30,14 @@ controller.login = (req, res, next) => {
   })(req, res, next)
 }
 
+controller.logout = (req, res, next) => {
+  req.logout((error) => {
+    if (error) {
+      return next(error)
+    }
+    res.redirect("/")
+  })
+  //
+}
+
 module.exports = controller

@@ -12,7 +12,7 @@ module.exports = {
     users.forEach((user) => {
       updatedUsers.push({
         id: user.id,
-        password: bcrypt.hashSync("demo@123", 8),
+        password: bcrypt.hashSync("Demo@123", 8),
       })
     })
     await models.User.bulkCreate(updatedUsers, {

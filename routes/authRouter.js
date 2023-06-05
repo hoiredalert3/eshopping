@@ -5,6 +5,7 @@ const controller = require("../controllers/authController")
 const { body, getErrorMsg } = require("../controllers/validator")
 
 router.get("/login", controller.show)
+
 router.post(
   "/login",
   body("email")
@@ -19,8 +20,11 @@ router.post(
     if (msg) {
       return res.render("login", { loginMessage: msg })
     }
+    next()
   },
   controller.login
 )
+
+router.get("/logout", controller.logout)
 
 module.exports = router
