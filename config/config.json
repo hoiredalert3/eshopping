@@ -4,7 +4,7 @@
     "username": "developer",
     "password": "12345678",
     "database": "eshopDB",
-    "host": "127.0.0.1",
+    "host": "rediss://red-chua4me7avj345e21lkg:6havMAiNhkZ09X6dVlFLzCyQWuCQG0aC@singapore-redis.render.com:6379",
     "dialect": "postgres"
   },
   "test": {
