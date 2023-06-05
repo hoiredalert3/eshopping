@@ -14,7 +14,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await models.User.findOne({
-      attributes: ["id", "email", "firstName", "lastname", "mobile", "isAdmin"],
+      attributes: ["id", "email", "firstName", "lastName", "mobile", "isAdmin"],
       where: { id },
     })
     done(null, user)
@@ -41,7 +41,7 @@ passport.use(
         if (!req.user) {
           //Neu user chua dang nhap
           const user = await models.User.findOne({ where: { email } })
-          if (!email) {
+          if (!user) {
             //Neu email khong ton tai
             return done(
               null,

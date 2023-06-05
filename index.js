@@ -82,12 +82,14 @@ app.use((req, res, next) => {
 //Routes
 const indexRouter = require("./routes/indexRouter")
 const productsRouter = require("./routes/productsRouter")
+const usersRouter = require("./routes/usersRouter")
 const authRouter = require("./routes/authRouter")
 const exp = require("constants")
 
 app.use("/", indexRouter)
 app.use("/products", productsRouter)
 app.use("/users", authRouter)
+app.use("/users", usersRouter)
 
 //Middleware function at the bottom of the stack to handle a 404 response
 app.use((req, res, next) => {
