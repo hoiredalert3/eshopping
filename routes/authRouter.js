@@ -1,10 +1,10 @@
-"use strict"
-const express = require("express")
-const router = express.Router()
-const controller = require("../controllers/authController")
-const { body, getErrorMsg } = require("../controllers/validator")
+"use strict";
+const express = require("express");
+const router = express.Router();
+const controller = require("../controllers/authController");
+const { body, getErrorMsg } = require("../controllers/validator");
 
-router.get("/login", controller.show)
+router.get("/login", controller.show);
 
 router.post(
   "/login",
@@ -16,15 +16,17 @@ router.post(
     .withMessage("Invalid email address"),
   body("password").trim().notEmpty().withMessage("Password is required"),
   (req, res, next) => {
-    const msg = getErrorMsg(req)
+    const msg = getErrorMsg(req);
     if (msg) {
-      return res.render("login", { loginMessage: msg })
+      return res.render("login", { loginMessage: msg });
     }
-    next()
+    next();
   },
   controller.login
-)
+);
 
-router.get("/logout", controller.logout)
+router.get("/logout", controller.logout);
 
-module.exports = router
+router.post("/register", controller.register);
+
+module.exports = router;

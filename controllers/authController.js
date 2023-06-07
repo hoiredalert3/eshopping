@@ -1,61 +1,82 @@
-"use strict"
+"use strict";
 
-const models = require("../models")
-const passport = require("./passport")
+const models = require("../models");
+const passport = require("./passport");
 
-let controller = {}
+let controller = {};
 
 controller.show = (req, res) => {
   if (req.isAuthenticated()) {
-    res.redirect("/")
+    res.redirect("/");
   }
   res.render("login", {
     loginMessage: req.flash("loginMessage"),
     reqUrl: req.query.reqUrl,
-  })
-}
+    registerMessage: req.flash("registerMessage"),
+  });
+};
 
 controller.login = (req, res, next) => {
-  const keepSignedIn = req.body.keepSignedIn
-  const reqUrl = req.body.reqUrl ? req.body.reqUrl : "/users/my-account"
-  let cart = req.session.cart
+  const keepSignedIn = req.body.keepSignedIn;
+  const reqUrl = req.body.reqUrl ? req.body.reqUrl : "/users/my-account";
+  let cart = req.session.cart;
   passport.authenticate("local-login", (error, user) => {
     if (error) {
-      return next(error)
+      return next(error);
     }
 
     if (!user) {
-      return res.redirect(`/users/login?reqUrl=${reqUrl}`)
+      return res.redirect(`/users/login?reqUrl=${reqUrl}`);
     }
 
     req.logIn(user, (error) => {
       if (error) {
-        return next(error)
+        return next(error);
       }
-      req.session.cookie.maxAge = keepSignedIn ? 24 * 60 * 60 * 1000 : null
-      req.session.cart = cart
-      return res.redirect(reqUrl)
-    })
-  })(req, res, next)
-}
+      req.session.cookie.maxAge = keepSignedIn ? 24 * 60 * 60 * 1000 : null;
+      req.session.cart = cart;
+      return res.redirect(reqUrl);
+    });
+  })(req, res, next);
+};
 
 controller.logout = (req, res, next) => {
-  const cart = req.session.cart
+  const cart = req.session.cart;
   req.logout((error) => {
     if (error) {
-      return next(error)
+      return next(error);
     }
-    req.session.cart = cart
-    res.redirect("/")
-  })
+    req.session.cart = cart;
+    res.redirect("/");
+  });
   //
-}
+};
 
 controller.isLoggedIn = (req, res, next) => {
   if (req.isAuthenticated()) {
-    return next()
+    return next();
   }
-  res.redirect(`/users/login?reqUrl=${req.originalUrl}`)
-}
+  res.redirect(`/users/login?reqUrl=${req.originalUrl}`);
+};
 
-module.exports = controller
+controller.register = async (req, res, next) => {
+  const reqUrl = req.body.reqUrl ? req.body.reqUrl : "/users/my-account";
+  const cart = req.session.cart;
+  passport.authenticate("local-register", (error, user) => {
+    if (error) {
+      return next(error);
+    }
+    if (!user) {
+      return res.redirect(`/users/login?reqUrl=${reqUrl}`);
+    }
+    req.logIn(user, (error) => {
+      if (error) {
+        return next(error);
+      }
+      req.session.cart = cart;
+      res.redirect(reqUrl);
+    });
+  })(req, res, next);
+};
+
+module.exports = controller;
