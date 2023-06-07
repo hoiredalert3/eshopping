@@ -20,4 +20,7 @@ router.post("/cart", cartController.add);
 //Put route to update product
 router.put("/cart", cartController.update);
 
+//Delete route to remove product
+router.delete("/cart", cartController.delete);
+
 module.exports = router;

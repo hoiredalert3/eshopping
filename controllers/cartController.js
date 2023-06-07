@@ -37,6 +37,27 @@ controller.update = async (req, res) => {
   return res.status(204).end();
 };
 
+controller.delete = async (req, res) => {
+  const id = isNaN(req.body.id) ? 0 : Math.max(0, parseInt(req.body.id));
+  const clear = req.body.clear === true;
+
+  if (clear) {
+    req.session.cart.clear();
+    return res.json({
+      clear: true,
+      quantity: req.session.cart.quantity,
+    });
+  }
+
+  req.session.cart.remove(id);
+  res.json({
+    removedId: id,
+    quantity: req.session.cart.quantity,
+    subtotal: req.session.cart.subtotal,
+    total: req.session.cart.total,
+  });
+};
+
 controller.showCart = async (req, res) => {
   res.locals.cart = req.session.cart.getCart();
   return res.render("cart");
