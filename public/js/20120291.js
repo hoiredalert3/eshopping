@@ -80,6 +80,7 @@ const removeFromCart = async (id) => {
           ).textContent = `$${result.subtotal}`;
           document.getElementById("total").textContent = `$${result.total}`;
         } else {
+          document.getElementById("cart-quantity").textContent = 0;
           document.querySelector(
             ".cart-page .container"
           ).innerHTML = `<div class="text-center border py-3">
